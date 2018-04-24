@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
-{% load staticfiles %}
+{% load widget_tweaks %}|
 
 {% block content %}
+
+{% load static %}
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
@@ -46,41 +48,22 @@
 <div class="container" style="margin-top:50px; margin-bottom:50px;">
 	<div class="row">
 		<div class="col-md-6">
-			<h1>Welcome {{ request.session.lazylogin }}</h1>
+			<h1>Welcome {{ request.session.name }}!</h1>
 		</div>
-		<div class="col-md-6">
-			{% if not isCustomer %}
-				<h1><a href="{% url 'sell-recipe' %}" class="btn btn-success" style="float:right;">Create Recipe</a></h1>
-			{% endif %}
-		</div>
-	</div>
-	<br>
+  </div>
+  
+  <br>
+
+  <br>
 
 	<div>
-		<input id=”q” class="form-control" name="search" placeholder="Search for recipe..." type=”text”/>
+		<h1><a href="{% url 'search-drinks' %}" class="btn btn-success" style="float:center;">Find Some New Favorites!</a></h1>
 	</div>
 
-	<br>
+  <br>
 
-	{% include '_recipes.html' %}
+	{% include '_favorites.html' %}
 </div>
 
-<script>
-	$( document ).ready(function() {
-		console.log("Document is ready");
-		$('input[name=search]').on('input',function(e){ 
-			$.ajax({
-		        url: '/ajax/search/recipe',
-		        data: {
-		          'q': $(this).val()
-		        },
-		        success: function (data) {
-		        	$( "#recipe-table" ).replaceWith( data );
-		        }
-		    }); 
-
-		});
-	});
-</script>
 
 {% endblock %}
